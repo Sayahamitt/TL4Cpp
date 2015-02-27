@@ -32,13 +32,14 @@ namespace tl4cpp {
         picojson::value request(const std::map<std::string, std::string>& _parameter = std::map<std::string, std::string>());
         
     protected:
-        const tl4cpp::oauth authorization;
+        const tl4cpp::oauth& authorization;
         const std::string apipath;
         const std::string APIURL_uri;
         
-        std::map<std::string, std::string> http_header;
-        clx::https session = clx::https(APIDOMEIN_uri,443);
+        clx::https* session;
         
+        virtual void sessioninit();
+        virtual std::map<std::string,std::string> http_head(std::string auth_head);
         virtual void execute(const std::map<std::string, std::string>&) = 0;
     };
 }

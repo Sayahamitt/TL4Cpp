@@ -16,17 +16,25 @@
 namespace tl4cpp {
     postapi::postapi(const oauth& _authorization, const std::string _apipath):
     apibase(_authorization,_apipath){
+        sessioninit();
     }
     
     postapi::~postapi(){}
     
+    std::map<std::string,std::string> postapi::http_head(std::string auth_head){
+        std::map<std::string, std::string> _header;
+        _header["Authorization"] = auth_head;
+        _header["Content-Type"] = "application/x-www-form-urlencoded";
+        _header["Connection"]="close";
+        
+        return _header;
+    }
+    
     void postapi::execute(const std::map<std::string, std::string>& parameters){
         std::string query = stringpair::array_to_string(stringpair::parsefrommap(parameters),"=","&");
+        std::map<std::string, std::string> http_header = http_head(authorization.header_post_www_form(APIURL_uri , parameters));
         
-        http_header["Authorization"] = authorization.header_post_www_form(APIURL_uri , parameters);
-        http_header["Content-Type"] = "application/x-www-form-urlencoded";
-        
-        session.post(APIVERSION_uri + apipath, query, http_header);
-        std::cout<<session.body()<<std::endl;
+        session->post(APIVERSION_uri + apipath, query, http_header);
+        std::cout<<session->body()<<std::endl;
     }
 }

@@ -14,22 +14,36 @@ namespace tl4cpp {
     authorization(_authorization),
     apipath(_apipath),
     APIURL_uri(APIPROTOCOL_uri + APIDOMEIN_uri + APIVERSION_uri + apipath){
-        http_header["Connection"]="close";
+        sessioninit();
     }
     
     const std::string apibase::APIPROTOCOL_uri = "https://";
     const std::string apibase::APIDOMEIN_uri = "api.twitter.com";
     const std::string apibase::APIVERSION_uri = "/1.1";
     
-    apibase::~apibase(){}
+    apibase::~apibase(){
+        delete session;
+    }
     
     picojson::value apibase::request(const std::map<std::string, std::string>& _parameter){
         execute(_parameter);
         
         picojson::value result;
         std::string err;
-        picojson::parse(result, session.body().begin(), session.body().end(),&err);
+        picojson::parse(result, session->body().begin(), session->body().end(),&err);
 
         return result;
+    }
+    
+    void apibase::sessioninit(){
+        session = new clx::https(APIDOMEIN_uri,443);
+    }
+    
+    std::map<std::string,std::string> apibase::http_head(std::string auth_head){
+        std::map<std::string, std::string> _header;
+        _header["Authorization"] = auth_head;
+        _header["Connection"]="close";
+        
+        return _header;
     }
 }

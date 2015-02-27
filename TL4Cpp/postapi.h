@@ -19,6 +19,7 @@ namespace tl4cpp {
         
     protected:
         void execute(const std::map<std::string, std::string>& parameters);
+        std::map<std::string,std::string> http_head(std::string auth_head);
     };
 }
 

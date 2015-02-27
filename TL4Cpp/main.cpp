@@ -17,21 +17,34 @@
 #include "oauth.h"
 #include "getapi.h"
 #include "postapi.h"
+#include "postmultipart.h"
 
-const std::string c_key ="Q6xo84MPcloXMXsbxx55kPlMi";
-const std::string c_sec ="ewFfhJNd9pEFfGUzVQUTQFtNMYSaHCrcDlVFfrqTYlFZbYYK2q";
-const std::string my_access_token ="2280734850-Sp8WD2JpioN17mUF4a1lIA19yqozKhyWeaoPmsA";
-const std::string my_access_sec ="cZPraKMj0s98BYCTxwtTxa8omaUorwdNTlbISLVtIDcoO";
+#include "keys.h"
+
+void postimagetest(){
+    tl4cpp::oauth certifyer(c_key,c_sec,my_access_token,my_access_sec);
+    tl4cpp::postmultipart mediapost(certifyer,"/media/upload.json");
+    
+    mediapost.request(std::map<std::string, std::string>(), "media", "/Volumes/Working Data/Gentle Sheep/CppTwiLib/testmedia.png");
+}
 
 int main() {
-    tl4cpp::oauth certifyer(c_key,c_sec,my_access_token,my_access_sec);
+    //postimagetest();
+    /*
+    
     std::pair<std::string,std::string> _pair("this is picture","application/octet-stream");
     std::pair<std::string,std::string> _pair2("hello my status","");
+    std::pair<std::string,std::string> _pair3("this is picture","application/octet-stream");
     std::map<std::string,std::pair<std::string,std::string>> test;
     test["media"]=_pair;
     test["status"]=_pair2;
+    test["media2"]=_pair3;
     std::cout<<tl4cpp::multipartform::makebody(test, tl4cpp::multipartform::strrand(32));
-    /*
+    
+    
+    */
+    tl4cpp::oauth certifyer(c_key,c_sec,my_access_token,my_access_sec);
+
     std::map<std::string,std::string> param;
     param["status"]="it is test";
     
@@ -43,6 +56,6 @@ int main() {
     
     tl4cpp::getapi tlget(certifyer,"/statuses/home_timeline.json");
     tlget.request(param_a);
-    */
+    
     return 0;
 }
