@@ -19,6 +19,7 @@ namespace tl4cpp {
         /*multipart_type
          std::map<パラメータの名前,std::pair<パラメータの中身,データのHTTP Content-Type>>
          */
+        typedef std::pair<std::string, std::string> data_property_type;
         typedef std::map<std::string,std::pair<std::string,std::string>> multipart_type;
         //ランダムな英小文字列生成関数
         inline std::string strrand(int length){
@@ -52,6 +53,20 @@ namespace tl4cpp {
             query += "--" + boundary + "--\r\n";
             
             return query;
+        }
+        
+        inline multipart_type maptomultiparttype(const std::map<std::string,std::string>& source){
+            multipart_type result;
+            
+            for (std::map<std::string,std::string>::const_iterator itr = source.begin();
+                 itr != source.end(); itr++) {
+                data_property_type property(itr->second,"");
+                if(itr->first == "media"){
+                    property.second="application/octet-stream";
+                }
+                result[itr->first]=property;
+            }
+            return result;
         }
     }
 }
