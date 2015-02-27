@@ -26,7 +26,7 @@ namespace tl4cpp {
             char* _str = new char[length + 1];
             time_t now_time;
             time(&now_time);
-            srand((unsigned int)now_time);
+            srand((unsigned int)now_time + (unsigned int)reinterpret_cast<unsigned long>(_str));
             for(int i=0;i<length + 1;i++){
                 _str[i] = rand() % 25 + 97;//UTF-8専用
             }_str[length]=0;
