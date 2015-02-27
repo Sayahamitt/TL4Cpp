@@ -14,7 +14,7 @@
 namespace tl4cpp {
     class getapi :public apibase{
     public:
-        getapi(const oauth& _authorization, const std::string _apipath);
+        getapi(const oauth& _authorization, const std::string _apipath, const std::string _apidomein = "api.twitter.com");
         ~getapi();
         
     protected:

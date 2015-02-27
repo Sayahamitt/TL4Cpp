@@ -14,8 +14,8 @@
 #include "postapi.h"
 
 namespace tl4cpp {
-    postapi::postapi(const oauth& _authorization, const std::string _apipath):
-    apibase(_authorization,_apipath){
+    postapi::postapi(const oauth& _authorization, const std::string _apipath, const std::string _apidomein):
+    apibase(_authorization,_apipath,_apidomein){
         sessioninit();
     }
     

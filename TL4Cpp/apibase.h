@@ -22,11 +22,10 @@
 namespace tl4cpp {
     class apibase{
     public:
-        apibase(const tl4cpp::oauth& _authorization, const std::string _apipath);
+        apibase(const tl4cpp::oauth& _authorization, const std::string _apipath, const std::string _apidomein = "api.twitter.com");
         virtual ~apibase();
         
         const static std::string APIPROTOCOL_uri;
-        const static std::string APIDOMEIN_uri;
         const static std::string APIVERSION_uri;
         
         picojson::value request(const std::map<std::string, std::string>& _parameter = std::map<std::string, std::string>());
@@ -35,6 +34,7 @@ namespace tl4cpp {
         const tl4cpp::oauth& authorization;
         const std::string apipath;
         const std::string APIURL_uri;
+        const std::string APIDOMEIN_uri;
         
         clx::https* session;
         

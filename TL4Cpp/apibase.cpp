@@ -10,15 +10,15 @@
 
 
 namespace tl4cpp {
-    apibase::apibase(const tl4cpp::oauth& _authorization, const std::string _apipath):
+    apibase::apibase(const tl4cpp::oauth& _authorization, const std::string _apipath ,const std::string _apidomein):
     authorization(_authorization),
     apipath(_apipath),
+    APIDOMEIN_uri(_apidomein),
     APIURL_uri(APIPROTOCOL_uri + APIDOMEIN_uri + APIVERSION_uri + apipath){
         sessioninit();
     }
     
     const std::string apibase::APIPROTOCOL_uri = "https://";
-    const std::string apibase::APIDOMEIN_uri = "api.twitter.com";
     const std::string apibase::APIVERSION_uri = "/1.1";
     
     apibase::~apibase(){
